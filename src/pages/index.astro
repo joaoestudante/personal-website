@@ -1,15 +1,10 @@
 ---
+import GlobalLayout from "../layouts/GlobalLayout.astro";
+import Home from "./Home.svelte";
+const allPosts = await Astro.glob('../pages/blog/posts/*/*.md');
+const recentPosts = allPosts.slice(0,1).sort((a, b) => Date.parse(b.frontmatter.pubDate) - Date.parse(a.frontmatter.pubDate)).filter(a => !a.frontmatter.draft);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<GlobalLayout> 	
+	<Home recentPosts={recentPosts} client:idle></Home>
+</GlobalLayout>

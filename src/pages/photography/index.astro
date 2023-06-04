@@ -1,0 +1,10 @@
+---
+import GlobalLayout from "../../layouts/GlobalLayout.astro";
+import { Image } from '@astrojs/image/components';
+const imageUrl = 'https://pub-fe47a16f8c674b3baadd1715ede15f2e.r2.dev/faial-avifs/DSCF1207_DxO.avif';
+---
+
+<GlobalLayout >
+	<h1>Photography</h1>
+	<Image src={imageUrl} width={750} height={250} format="avif" alt="descriptive text" />
+</GlobalLayout>

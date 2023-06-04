@@ -1,0 +1,11 @@
+---
+import { all } from "mdast-util-to-hast";
+import GlobalLayout from "../../layouts/GlobalLayout.astro";
+import Blog from "./Blog.svelte";
+const posts = await Astro.glob('./posts/*/*.md');
+const allPosts = posts.sort((a, b) => Date.parse(b.frontmatter.pubDate) - Date.parse(a.frontmatter.pubDate)).filter(a => !a.frontmatter.draft);
+---
+
+<GlobalLayout>
+	<Blog posts={allPosts} client:load></Blog>
+</GlobalLayout>
