@@ -2,7 +2,7 @@
 import GlobalLayout from "../layouts/GlobalLayout.astro";
 import Home from "./Home.svelte";
 const allPosts = await Astro.glob('../pages/blog/posts/*/*.md');
-const recentPosts = allPosts.slice(0,1).sort((a, b) => Date.parse(b.frontmatter.pubDate) - Date.parse(a.frontmatter.pubDate)).filter(a => !a.frontmatter.draft);
+const recentPosts = allPosts.sort((a, b) => Date.parse(b.frontmatter.pubDate) - Date.parse(a.frontmatter.pubDate)).filter(a => !a.frontmatter.draft).slice(0,1);
 ---
 
 <GlobalLayout> 	

@@ -1,0 +1,9 @@
+---
+import GlobalLayout from "../../../layouts/GlobalLayout.astro";
+import PostPage from "./PostPage.svelte";
+const {frontmatter} = Astro.props;
+---
+
+<GlobalLayout>
+    <PostPage postData={frontmatter}></PostPage>
+</GlobalLayout>

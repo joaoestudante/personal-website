@@ -4,7 +4,7 @@
       const navLinks =
         [
           {title: 'Home', link: '/', active: page == '/'},
-          {title: 'Blog', link: '/blog', active: page == '/blog'},
+          {title: 'Blog', link: '/blog', active: page.includes('/blog')},
           {title: "TIL",  link: '/til', active: page == '/til'}
           ];
 </script>

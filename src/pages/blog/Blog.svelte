@@ -5,7 +5,9 @@
 
 <div>
     <h3 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Blog</h3>
+    {#if posts.length == 0}
     <p class="mt-4 text-gray-900 dark:text-white">There's nothing here yet :)</p>
+    {/if}
     <div class="flex flex-col gap-4 mt-8 mb-24">
         <div class="flex flex-row flex-wrap gap-4 justify-between">
           {#each posts as post}
