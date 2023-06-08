@@ -4,7 +4,8 @@ module.exports = {
 		'./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}',
 	    "./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}",],
 	plugins: [
-		require('flowbite/plugin')
+		require('flowbite/plugin'),
+		require('@tailwindcss/typography')
 	],
 	darkMode: 'class',
 	theme: {
