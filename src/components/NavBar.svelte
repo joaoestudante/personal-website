@@ -5,9 +5,8 @@
         [
           {title: 'Home', link: '/', active: page == '/'},
           {title: 'Blog', link: '/blog', active: page == '/blog'},
-          {title: "TIL",  link: '/til', active: page == '/til'},
-          {title: "Photography", link: "/photography", active: page == '/photography'}
-        ];
+          {title: "TIL",  link: '/til', active: page == '/til'}
+          ];
 </script>
 
 <nav class="flex flex-row flex-wrap py-4 justify-end items-center gap-3 sm:text-sm mb-12">

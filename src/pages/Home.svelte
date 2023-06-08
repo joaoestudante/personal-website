@@ -9,8 +9,8 @@
         <div class="flex flex-col justify-start">
             <h3 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">João Estudante</h3>
             <p class="mt-2 text-gray-500 dark:text-gray-300">Full Stack Developer @ Autodesk Prodsmart, helping make factories more efficient.</p>
-            <p class="mt-4 text-gray-900 dark:text-white">In my free time, I like to experiment with new frameworks, write, watch movies, and travel.</p>
-            <p class="text-gray-900 dark:text-white">I also take photos - you can check my favourites <a class="text-primary-700 dark:text-primary-600" href="/photography">here</a>!</p>
+            <p class="mt-4 text-gray-900 dark:text-white">Fan of interface design, human interaction with computers, and how to build software.</p>
+            <p class=" text-gray-900 dark:text-white">In my free time, I like to experiment with new frameworks, write, watch movies, and travel.</p>
             <div class="flex mt-8 space-x-6">
                 <FooterIcon href="mailto:estudante.lourenco@gmail.com" class="text-gray-400 hover:text-gray-900">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
