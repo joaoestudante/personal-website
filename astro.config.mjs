@@ -8,5 +8,6 @@ import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [svelte(), tailwind(), prefetch(), image(), mdx()]
+  integrations: [svelte(), tailwind(), prefetch(), image(), mdx()],
+  site: 'https://joaoestudante.com'
 });
