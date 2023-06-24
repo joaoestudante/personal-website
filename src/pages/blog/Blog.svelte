@@ -4,7 +4,7 @@
 </script>
 
 <div>
-    <h3 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">Blog</h3>
+    <h3 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Blog</h3>
     {#if posts.length == 0}
     <p class="mt-4 text-gray-900 dark:text-white">There's nothing here yet :)</p>
     {/if}

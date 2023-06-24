@@ -1,0 +1,107 @@
+---
+layout: ../../../../layouts/BlogPost.astro
+title: How I wrote my Thesis using R and LaTeX
+author: João Estudante
+description: Writing a Thesis is a big challenge, made even harder when we are constantly
+  updating data and charts. This article describes how I made things easier with
+  R.
+image:
+  url: ""
+  alt: Logo for the R programming language.
+pubDate: 2023-06-24
+tags:
+  - tutorial
+  - efficiency
+draft: false
+---
+
+
+
+## Setting the scene
+
+### The good
+
+Even before writing the very first sentence of my Thesis, I knew that I wanted to use LaTeX. It makes formatting text, citing publications, and captioning images so much easier than anything I've used in the past. Plus, there was already a pre-built template for my University, which ensured my compliance with the official guidelines for formatting. I could also use [Overleaf](https://www.overleaf.com/), avoiding the constant back and forth of highlighted PDFs with my supervisor when I needed some feedback, and giving me another layer of backups. What's not to like? 
+
+
+### The bad
+
+My Thesis had a few large `csv` data files containing results of different approaches. To make sense of these results, and compare approaches, I had to generate graphs and perform statistical tests. With my knowledge at the time, I could've done that with 3 tools: Excel, Python, or R.
+
+However, regardless of the tool, a very big problem was looming in the horizon, waiting patiently to strike. How was I going to get my graphs, p-values, and data summary tables into Overleaf?
+
+- Save the graphs, drag them to Overleaf, compile the document, check if they look good, repeat if not
+- Generate p-values and test results, copy them to the correct place in the document
+- Manually type the tables into LaTeX with the correct values
+
+If I only had to do this once, it would've been fine. The issue was that my Thesis was a very iterative process. I generated graphs and drew conclusions, wrote about them, and then my supervisor would suggest exploring the data through a different lens. There was also some experimentation with different colors and graph types, as well as different approaches employed that changed _some_ graphs and p-values. _Some_ is a key word, because it meant I would have to selectively replace things in just a few places, and not globally. Doing this over and over again didn't sit well with me. I really, really despise repeating something boring and error-prone multiple times. That's what a computer is for. A solution had to exist.
+
+## Approach
+
+Enter [R Markdown](https://rmarkdown.rstudio.com/). This is a fantastic tool integrated with [R Studio](https://posit.co/downloads/), made for authoring books, publications, presentations... It can output to various formats like PDF, HTML, Markdown, LaTeX, and others. The wonderful thing about it is that it combines both analysis and writing in a single document. Here's a very minimal example, courtesy of the excellent [Bookdown documentation](https://bookdown.org/yihui/rmarkdown-cookbook/r-code.html):
+
+~~~r
+```{r}
+x <- 5  # radius of a circle
+```
+
+For a circle with the radius `r x`, its area is `r pi * x^2`.
+~~~
+
+When compiled, the following will show up in the output:
+
+> For a circle with the radius 5, its area is 78.5398163397
+
+R code is executed and the output is written in the text. Charts can also be generated and they will show up where possible.
+
+This is an absolute game changer. Now, if my `csv` changes, *all* of my charts, statistical analyses, tables, and calculations are remade with the new data. The cherry on top is that RMarkdown can output a LaTeX **fragment**. This is different from a full blown LaTeX document: it's made to be `\include`d in another LaTeX document. This means I don't need to write my whole Thesis in RMarkdown, I don't need to create a template for my University's styling, and I don't need to stitch a PDF output from RMarkdown with the rest of the Thesis.
+
+To achieve this, I used the following configuration at the start of my `.Rmd` file:
+
+```yaml
+---
+title: "evaluation"
+author: "João Estudante"
+knit: (function(input, ...) {
+    rmarkdown::render(
+      input,
+      output_file = 'evaluation.tex',
+      envir = globalenv()
+    )
+  })
+output:
+  latex_fragment:
+    extra_dependencies: "subfig"
+    fig_caption: yes
+---
+```
+
+The `evaluation.tex` file is then included somewhere in the main LaTeX document.
+
+### Going one step further
+
+How can I improve the process even more? Ideally, I would like to write or modify my analysis, check the output of the chapter, and get the changes into Overleaf when I'm satisfied or done for the day. The order is important: there's no need to upload potentially broken changes into Overleaf and waiting for the compilation to see them, when I could've just previewed the document in my PC by compiling locally. I also wanted this process to be as fast as possible.
+
+To compile the document, I used [Watchexec](https://watchexec.github.io/). This program watches for file changes in a directory, and executes a configurable command. Whenever I saved my RMarkdown file, the LaTeX fragment would be generated, which made Watchexec execute a LaTeX compilation process. Due to the large number of references, chapters, and citations, I found that running `pdflatex` just once wasn't enough. I used [Arara](https://github.com/islandoftex/arara) to execute the compilation command several times and cleanup intermediate files:
+
+```shell
+watchexec -c -e tex -d 2000 arara Thesis-MSc-Main_Document.tex
+```
+Watchexec will wait 2000ms after a file with extension `.tex` changes, and then execute `arara Thesis-MSc-Main_Document.tex`. The 2000ms is a bit of an arbitrary value, but I found that having no waiting time would trigger several compilations because R would overwrite the `.tex` fragment multiple times during generation. 
+
+The `Thesis-MSc-Main_Document.tex` file includes all of the chapters, and is what actually has the `\documentclass` and `\begin{document}` tags. It also contains the Arara configuration:
+
+```
+% arara: pdflatex
+% arara: bibtex
+% arara: pdflatex
+% arara: pdflatex
+% arara: clean : { extensions: [ aux, glo,idx,log,toc,ist,acn,acr,alg,bbl,blg,dvi,glg,gls,ilg,ind,lof,maf,mtc,mtc1,
+out,synctex,soc,loa,loc,mtc,mtc0,mtc2,mtc3,ml,lol] }
+```
+
+The last step is to get the changes into Overleaf. Luckily, Overleaf can be used as a remote **git repository**. If I clone the Overleaf project and work on top of it on my PC, uploading changes boils down to committing and pushing them, just like in a regular software project.
+
+---
+
+And this is how I've done it. Updating data and charts while writing a thesis is a daunting and honestly demoralizing task. It's plain boring and prone to errors.  However, R and R Markdown greatly simplify the process, and the usage of other smart tricks improve the experience significantly, as I've described. I hope this can help anyone reading as much as it helped me.

@@ -1,5 +1,4 @@
 ---
-layout: "../index.astro"
 title: Speedrunning Wikipedia connections
 author: João Estudante
 description: "How fast can you reach two very different Wikipedia pages, following only internal links? I'll explore approaches, limitations, and some funny examples."
@@ -8,7 +7,7 @@ image:
   alt: ""
 pubDate: 2023-06-05
 tags: ["visualization", "exploration"]
-draft: false
+draft: true
 ---
 
 ## Getting the data ready

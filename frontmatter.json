@@ -58,5 +58,6 @@
     "astro",
     "successes"
   ],
-  "frontMatter.taxonomy.categories": []
+  "frontMatter.taxonomy.categories": [],
+  "frontMatter.dashboard.openOnStart": false
 }
