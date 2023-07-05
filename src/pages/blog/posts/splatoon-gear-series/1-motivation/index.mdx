@@ -1,0 +1,96 @@
+---
+layout: ../../../../../layouts/BlogPost.astro
+title: Building a Splatoon Gear Database - Motivation
+author: João Estudante
+description: This post describes why I'm venturing into building a new Splatoon tool, and how it can be helpful for the playerbase.
+tags:
+  - splatoon-gear-website
+draft: false
+pubDate: 2023/07/05
+---
+
+
+## Introduction
+
+Splatoon is a competitive shooter game series released by Nintendo. It features cute human-octupus and human-squid mixed characters that shoot at each other with ink. There have been 3 games released so far.
+
+![](/src/pages/blog/posts/splatoon-gear-series/1-motivation/splatoon_promo.jpg)
+
+One of the key mechanics of the game, ever since the first release, is **gear**. Players can choose to equip their characters with different head gear (like glasses, hats, masks), clothing gear (shirts, jackets, armor) and shoes (sandals, crocs, boots, slippers). This changes their look, and perhaps most importantly, affects the **gameplay**.
+
+Each gear piece can have up to 4 **abilities**. There are a total of 24 abilities, and they vary a lot: you can increase your damage, increase your run speed, decrease the time you take to return to the game after you die, improve your weapon's special ability recharge rate... The possibilities are not endless, but there's something for everyone.
+
+You unlock random abilities on your gear by playing games while wearing it. It's possible to customize the abilities of your gear, so that you can have your favourite look AND abilities. But this takes **chunks**, a resource that is not easy to come by unless you play a lot or get lucky in the vending machine. You can use **drink tickets**, which increase your chances of getting a particular ability, but it will never be 100%. The Splatoon community, however, figured out that each gear piece has a **seed**. If you manage to find a piece's seed, you can easily predict the steps you'll have to take to get a particular combination of abilities.
+
+## Building gear
+
+A very popular website for finding a seed is Leanny's website, at https://leanny.github.io. This website allows you to track the gear you own, and find a particular piece's seed by having you input what random abilities you obtain on that piece as you play. Given the seed, it also tells you what steps you have to take to arrive at a desired ability set:
+
+<div class="flex items-center justify-center">
+![](/src/pages/blog/posts/splatoon-gear-series/1-motivation/path_example1.png)
+</div>
+
+There are, however, some usability problems with the website:
+
+1. Importing the gear is done in a complicated way:
+    - DM a Discord bot to ask for a special link
+    - Open that link, and login to your the Nintendo Account
+    - Copy a link on the account page
+    - Send it to the bot
+    - The bot replies with a `json` file
+    - You upload the file to Leanny's website
+2. The whole process has to be repeated whenever a new piece of gear is obtained.
+3. You have to keep track of seeds somewhere else - updating the gear wipes the seeds.
+4. You also have to keep track of the abilities unlocked and their order somewhere else, since a gear update wipes this as well.
+5. There are no accounts, so there is no data sync. You can't plan the abilities you want on the gear you want on your PC, and then check that information on your phone. At least personally, my computer is far from my TV, and I play Splatoon on my TV. You know what I have near me when I'm on my TV? My phone. Considering that there is a manual process to register new abilities unlocked on a gear piece for seed prediction, doing it on a phone would make my life much easier.
+
+I believe I can solve all of these pain points with a new website. This is also going to be a great opportunity to learn in public and improve both my writing and technical skills. Let's go over the plan.
+
+## The plan for A New Thing
+
+### Features
+
+There are plenty of features I'd like to implement, but it's important to take a step back and focus on the core value proposition and pain points I should address. Those are:
+
+#### Setup once, refresh many times
+I can't stress enough how the friction on retrieving and adding gear is offputting, and just eliminates my motivation to do it. Therefore, there will be an initial setup to import gear; but any further actions should be restricted to just a simple refresh without losing progress. If possible, the user would not even have to manually hit refresh - the website would automatically take care of that.
+
+#### Intuitive seed finder
+
+The seed finder is honestly a bit complicated to use. It's necessary to read a big tutorial on it, and Leanny's interface is not super noob friendly. There's a "Gear Seed Checker", and a "Gear Seed Recovery". What's the difference? Which mode should I use? Why are there many seeds returned, when only a single one is accurate? Some gear can also be considered "fresh" if it has never been used, and this affects the seed finding process; but when searching for a seed, it's not obvious if I have a fresh gear piece or not - and so on.
+
+I want an interface where you choose a piece of gear, you state if it's fresh or not, and you either immediately have a seed, or receive instructions on what to do to eventually have the seed. The seed should also be associated to the gear once found, and persist this on subsequent refreshes/imports.
+
+#### Data export
+
+For peace of mind, the users should be able to export their data easily. This can be made in a way that allows importing later on, so that users never lose their seeds even if something happens to the website or their data.
+
+#### Other features
+
+- Login, so the gear database can be viewed on the go (or on the sofa)
+- History, so users can see what different abilities their gear has had and what actions they took to change them
+- All gear info, not just the one imported. Lets the users view what's missing in their collection.
+- Outfit listing. Splatoon 3 has the concept of "Freshest Fits" - favourite gear sets that can be easily changed into or out of. These are presumably the user's favourite, so allowing for easy access to them might be a plus.
+
+### The journey
+
+There are two main reasons to build this project. The first one is to offer a better solution to the Splatoon community than what currently exists. The second is to learn new skills in the web development world. At \$\{DAY_JOB\}, I am part of a team maintaining and improving a 10 year old Java + HTML/CSS/JS monolith, with some Vue sprinkled in some pages. It's a great application to learn core concepts, but feels very limiting sometimes, and does not have super modern features. As such, I don't really know what I'm missing on the other side of the fence. So, I will go with a **NextJS** application. I'm not familiar with React nor with Next, but a real project is the perfect opportunity to learn. 
+
+#### Phase 1
+
+The core features I need to implement can be done with a **static SPA** (single page app). There's no need for server rendered stuff, nor databases, and best of all - static website hosting is usually free. This will let me test the waters and focus on UI and UX. By hosting things statically, I'll have to go with localstorage or potentially SQLite in the browser to store data. This does have the downside of being brittle and prone to deletion, but life is made of compromises.
+
+#### Phase 2
+
+The algorithm for seed finding can sometimes be slow, as it's searching/generating many possible combinations. But since it relies on operations like XOR, a language like Rust can probably speed things up tremendously. I might never reach this phase, mind you; it's possible that I don't hit a bottleneck here. But if I do, I'll move the SPA to **SSR** (server side rendering) and build a Rust microservice to generate the seed. Hosting can then be moved to a $4 Digital Ocean droplet - I don't expect hundreds of thousands of visits a day, so this should be sufficient.
+
+#### Phase 3
+
+For login and history, a database is required. Once this phase is reached, then I'll definitely go for the cheap Digital Ocean droplet and move to **SSR**. I could probably keep most things static, but I'd like to experiment with **SSR** as well. A very interesting project called [create-t3-app](https://create.t3.gg/) caught my eye - backend and frontend in Typescript, with a type-safe API and with type-safe database calls? And based on NextJS? Sign me up. The database will most likely be SQLite, as I don't expect much traffic on average. Avoiding a managed DB like Postgres or MySQL brings costs down significantly. 
+
+I could also almost certainly have the application running on the free tier of services like Fly.io, AWS, or Vercel, for a long time. But I don't trust myself to setup things correctly, so I'm pretty scared of having a traffic spike and seeing a $100+ bill out of nowhere. With the $4 droplet, even with a lot of load I know what to expect in terms of billing. I'll miss out on scaling, but we can think about that when we get there :)
+
+
+## Final thoughts
+
+
