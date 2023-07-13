@@ -1,6 +1,6 @@
 <script>
     import { Avatar, FooterIcon, Button, A } from "flowbite-svelte";
-    import PostPreview from "../components/PostPreview.svelte";
+    import PostPreview from "./PostPreview.svelte";
     export let recentPosts = [];
   </script>
 

@@ -1,6 +1,6 @@
 ---
 import GlobalLayout from "../../layouts/GlobalLayout.astro";
-import Blog from "./Blog.svelte";
+import Blog from "../../components/Blog.svelte";
 const posts = await Astro.glob('./posts/**/*.mdx');
 const allPosts = posts.sort((a, b) => Date.parse(b.frontmatter.pubDate) - Date.parse(a.frontmatter.pubDate)).filter(a => !a.frontmatter.draft);
 ---

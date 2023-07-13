@@ -1,5 +1,5 @@
 <script>
-    import PostPreview from "../../components/PostPreview.svelte";
+    import PostPreview from "./PostPreview.svelte";
     export let posts = [];
 </script>
 
