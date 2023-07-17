@@ -1,5 +1,6 @@
 ---
 import NavBar from "../components/NavBar.svelte";
+
 const page = Astro.url.pathname;
 ---
 <html lang="en">
@@ -20,6 +21,10 @@ const page = Astro.url.pathname;
 			} else {
 				document.documentElement.classList.remove('dark');
 			}
+		</script>
+		<script>
+			import { drawMermaidJsGraphs } from "../plugins/mermaid.js";
+			drawMermaidJsGraphs();
 		</script>
 	</head>
 	<body class="bg-white dark:bg-gray-800">

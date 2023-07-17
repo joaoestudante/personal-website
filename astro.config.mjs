@@ -7,6 +7,8 @@ import image from "@astrojs/image";
 import mdx from '@astrojs/mdx';
 import m2dx from 'astro-m2dx';
 
+import { mermaid } from "./src/plugins/mermaid"
+
 /** @type {import('astro-m2dx').Options} */
 const m2dxOptions = {
   normalizePaths: true,
@@ -17,8 +19,7 @@ const m2dxOptions = {
 export default defineConfig({
   integrations: [svelte(), tailwind(), prefetch(), image(), mdx()],
   markdown: {
-    remarkPlugins: [[m2dx, m2dxOptions]],
-    //               ^^^^
+    remarkPlugins: [[m2dx, m2dxOptions], mermaid],
     extendDefaultPlugins: true,
   },
   site: 'https://joaoestudante.com'
