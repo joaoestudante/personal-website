@@ -54,10 +54,5 @@
       "path": "[[workspace]]/src/pages/blog"
     }
   ],
-  "frontMatter.taxonomy.tags": [
-    "astro",
-    "successes"
-  ],
-  "frontMatter.taxonomy.categories": [],
   "frontMatter.dashboard.openOnStart": false
 }

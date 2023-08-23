@@ -22,11 +22,7 @@ Splatoon is a competitive shooter game series released by Nintendo. It features 
 
 ![](/images/posts/splatoon-gear-series/1-motivation/splatoon_promo.jpg)
 
-One of the key mechanics of the game, ever since the first release, is **gear**. Players can choose to equip their characters with different head gear (like glasses, hats, masks), clothing gear (shirts, jackets, armor) and shoes (sandals, crocs, boots, slippers). This changes their look, and perhaps most importantly, affects the **gameplay**.
-
-Each gear piece can have up to 4 **abilities**. There are a total of 24 abilities, and they vary a lot: you can increase your damage, increase your run speed, decrease the time you take to return to the game after you die, improve your weapon's special ability recharge rate... The possibilities are not endless, but there's something for everyone.
-
-You unlock random abilities on your gear by playing games while wearing it. It's possible to customize the abilities of your gear, so that you can have your favourite look AND abilities. But this takes **chunks**, a resource that is not easy to come by unless you play a lot or get lucky in the vending machine. You can use **drink tickets**, which increase your chances of getting a particular ability, but it will never be 100%. The Splatoon community, however, figured out that each gear piece has a **seed**. If you manage to find a piece's seed, you can easily predict the steps you'll have to take to get a particular combination of abilities.
+One of the key mechanics of the game is **gear**. Players can choose to equip their characters with different head gear (like glasses, hats, masks), clothing gear (shirts, jackets, armor) and shoes (sandals, crocs, boots, slippers). This changes their look, and most importantly, affects the **gameplay**, as each gear piece can be loaded with distinctive abilities. These are random, but the randomness comes from a seed. If you find the seed, you can get the gear piece you want with the abilities you want.
 
 ## Building gear
 
@@ -52,7 +48,7 @@ There are, however, some usability problems with the website:
 
 I believe I can solve all of these pain points with a new website. This is also going to be a great opportunity to learn in public and improve both my writing and technical skills. Let's go over the plan.
 
-## The plan for A New Thing
+## The plan
 
 ### Features
 
@@ -63,9 +59,9 @@ I can't stress enough how the friction on retrieving and adding gear is offputti
 
 #### Intuitive seed finder
 
-The seed finder is honestly a bit complicated to use. It's necessary to read a big tutorial on it, and Leanny's interface is not super noob friendly. There's a "Gear Seed Checker", and a "Gear Seed Recovery". What's the difference? Which mode should I use? Why are there many seeds returned, when only a single one is accurate? Some gear can also be considered "fresh" if it has never been used, and this affects the seed finding process; but when searching for a seed, it's not obvious if I have a fresh gear piece or not - and so on.
+The seed finder is honestly a bit complicated to use. It's necessary to read a big tutorial on it, and Leanny's interface is not noob friendly.
 
-I want an interface where you choose a piece of gear, you state if it's fresh or not, and you either immediately have a seed, or receive instructions on what to do to eventually have the seed. The seed should also be associated to the gear once found, and persist this on subsequent refreshes/imports.
+I want an interface where you choose a piece of gear, you state if it's new or not, and you either immediately have a seed, or receive instructions on what to do to eventually have the seed. The seed should also be associated to the gear once found, and persist this on subsequent refreshes/imports.
 
 #### Data export
 
@@ -88,7 +84,7 @@ The core features I need to implement can be done with a **static SPA** (single 
 
 #### Phase 2
 
-The algorithm for seed finding can sometimes be slow, as it's searching/generating many possible combinations. But since it relies on operations like XOR, a language like Rust can probably speed things up tremendously. I might never reach this phase, mind you; it's possible that I don't hit a bottleneck here. But if I do, I'll move the SPA to **SSR** (server side rendering) and build a Rust microservice to generate the seed. Hosting can then be moved to a $4 Digital Ocean droplet - I don't expect hundreds of thousands of visits a day, so this should be sufficient.
+The algorithm for seed finding can sometimes be slow, as it's searching/generating many possible combinations. But since it relies on operations like XOR, a language like Rust can probably speed things up tremendously. I might never reach this phase, mind you; it's possible that I don't hit a bottleneck here. But if I do, I'll move the SPA to **SSR** (server side rendering) and build a Rust microservice to generate the seed. Hosting can then be moved to a $4 Digital Ocean droplet or similar - I don't expect hundreds of thousands of visits a day, so this should be sufficient.
 
 #### Phase 3
 
@@ -99,6 +95,4 @@ I could also almost certainly have the application running on the free tier of s
 
 ## Final thoughts
 
-I'm super excited to start this journey. I have a great tendency to leave projects unfinished, but I really want this to be different. If nothing else, at least to prove myself that I can actually ship something for once!
-
-It's likely that things won't go exactly as I have planned. I might have to rethink the architecture, features, or decisions. All of this is ok. Accept the unpredictable and learn: that's what I'm here to do.
+I'm super excited to start this journey. It's likely that things won't go exactly as I have planned. I might have to rethink the architecture, features, or decisions. All of this is ok. I'm here mostly to learn, after all!
