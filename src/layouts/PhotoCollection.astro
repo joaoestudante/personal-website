@@ -3,7 +3,7 @@ import { Image } from "astro:assets";
 import PhotoGrid from "../components/PhotoGrid.svelte";
 import GlobalLayout from "./GlobalLayout.astro";
 const {frontmatter} = Astro.props;
-const photos = await Astro.glob('../pages/photos/**/*.webp');
+const photos = await Astro.glob('../../public/images/photos/**/*.webp');
 const photosForThisCollection = photos.filter(photo => photo.default.src.includes(frontmatter.collectionFolder));
 ---
 
@@ -19,3 +19,4 @@ const photosForThisCollection = photos.filter(photo => photo.default.src.include
         </div>
     </div>
 </GlobalLayout>
+../components/PhotoGrid.svelte.tsx
