@@ -47,11 +47,15 @@
     }
   ],
   "frontMatter.framework.id": "other",
-  "frontMatter.content.publicFolder": "",
+  "frontMatter.content.publicFolder": "[[workspace]]/public",
   "frontMatter.content.pageFolders": [
     {
       "title": "blog",
       "path": "[[workspace]]/src/pages/blog"
+    },
+    {
+    "title": "photos",
+    "path": "[[workspace]]/src/pages/photos"
     }
   ],
   "frontMatter.dashboard.openOnStart": false

@@ -1,0 +1,127 @@
+---
+layout: ../../../../../layouts/BlogPost.astro
+title: Building a  - Architecture taking shape
+author: João Estudante
+description: I now have a more decent idea of how the project can be architected, and can play with real data.
+image: 
+  url: ""
+  alt: ""
+tags:
+  - splatoon-gear-website
+draft: true
+pubDate: "2023-08-24"
+---
+
+## Stack
+
+In the previous post, I got faced with the issue of having to use a backend. Since I was
+already using NextJS, I ended up moving to the [t3 stack](https://create.t3.gg/) - a stack based on NextJS and focused on typesafety with Typescript and tRPC. This lets me access backend methods from the frontend almost as if I am calling regular Javascript methods - no need to fiddle with fetch, headers, authorization... everything is included and configured out of the box.
+
+## Progress
+
+I ended up not using the [nxapi library](https://github.com/samuelthomas2774/nxapi) to manage the authorization flow. The main reason is that I struggled with imports and name resolution - the project is a standalone application first, and library second. It also lacks good documentation in the library front.
+
+Instead, I implemented everything myself, using [s3si.ts](https://github.com/spacemeowx2/s3si.ts) as a base. This is another library mostly focused on exporting data from the games played in Splatoon to a website. It has a single file containing all the authorization and token fetching, which made it easier to parse and adapt.
+
+### Learnings
+
+#### Variable types
+
+I wanted to have a generic function that could make requests to Nintendo to fetch any data they make available, should I need it in the future. This is possible because they use a GraphQL API to fetch data, and so only the body changes between requests. It has this format:
+
+```json
+{
+    extensions: {
+      persistedQuery: {
+        sha256Hash: query,
+        version: 1,
+      },
+    },
+    variables: {},
+}
+```
+
+`query` is a string that identifies what I'm actually fetching, and can be obtained from a constants file I wrote:
+
+```typescript
+export enum Queries {
+  myOutfitCommonDataFilteringConditionQuery = "d02ab22c9dccc440076055c8baa0fa7a",
+  myOutfitCommonDataEquipmentsQuery = "d29cd0c2b5e6bac90dd5b817914832f8"
+}
+```
+
+Now, the response also always follows the same format, so we can build a type for it:
+
+```typescript
+export type GraphQLResponse<T> = {
+    data: T;
+  } | {
+    errors: {
+      message: string;
+    }[];
+  };
+```
+
+This type has an **argument**, which in this case is another type that describes the format of the data in the response. Each query's response is different, but it is known. So we can easily create a type for that as well:
+
+```typescript
+export type QueriesResponseFormat = {
+  [Queries.myOutfitCommonDataFilteringConditionQuery]: {
+    gearPowers: {
+      nodes: {
+        name: string;
+      }[];
+    };
+  } 
+  [Queries.myOutfitCommonDataEquipmentsQuery]: Gear
+};
+
+export interface Gear {
+  weapons:       Weapons;
+  headGears:     Gears;
+  clothingGears: Gears;
+  shoesGears:    Gears;
+}
+```
+
+The `Gears` and `Weapons` types are then further refined. These were generated automatically using a VS Code extension ([Paste JSON as Code](https://marketplace.visualstudio.com/items?itemName=quicktype.quicktype)) which, as the name indicates, takes a JSON and outputs a bunch of Typescript types/interfaces that describe the JSON.
+
+To use these, I created a method that manages the requests and performs them. If it attempts to make a request and it fails, it updates the tokens and then attempts the request again. The relevant parts, related to the types, are highlighted below:
+
+```typescript
+private async request<T extends Queries>(query: T) {
+	const doRequest = async (): Promise<QueriesResponseFormat[T]> => {
+		const resp = await fetch(SPLATNET3_ENDPOINT, {...});
+
+		const json =
+			(await resp.json()) as GraphQLResponse<QueriesResponseFormat[T]>;
+
+		return (json.data);
+	};
+
+	const data = await doRequest();
+	return {
+		data: data,
+		gToken: this.gToken,
+		bulletToken: this.bulletToken
+	}
+}
+```
+
+To make a request, we do this:
+
+```typescript
+const resp = await this.request(Queries.myOutfitCommonDataEquipmentsQuery);
+data: resp.data;
+gToken: resp.gToken;
+bulletToken: resp.bulletToken;
+```
+
+This ensures that the response has the format we need for the particular request. VS Code also understands this, which makes for a wonderful development experience:
+
+<div class="flex items-center justify-center">
+![](/images/posts/splatoon-gear-series/3-architecture-taking-shape/response-typed.png)
+</div>
+
+This logic was adapted from `s3si.ts` - thanks to the author for the baseline.
+

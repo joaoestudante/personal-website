@@ -1,0 +1,13 @@
+---
+import GlobalLayout from "../../layouts/GlobalLayout.astro";
+import Photos from "../../components/Photos.svelte";
+
+const collections = await Astro.glob('./**/*.mdx');
+const allCollections = collections.sort((a, b) => Date.parse(b.frontmatter.pubDate) - Date.parse(a.frontmatter.pubDate)).filter(a => !a.frontmatter.draft);
+console.log(allCollections);
+---
+
+<GlobalLayout>
+    <Photos collections={allCollections}></Photos>
+</GlobalLayout>
+

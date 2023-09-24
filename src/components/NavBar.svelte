@@ -5,7 +5,8 @@
         [
           {title: 'Home', link: '/', active: page == '/'},
           {title: 'Blog', link: '/blog', active: page.includes('/blog')},
-          {title: "TIL",  link: '/til', active: page == '/til'}
+          {title: "TIL",  link: '/til', active: page == '/til'},
+          {title: 'Photos', link: '/photos', active: page.includes('/photos')},
           ];
 </script>
 
