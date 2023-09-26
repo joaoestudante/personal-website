@@ -6,7 +6,6 @@
     const splitUrl = photoUrl.default.src.split("/");
     return {
       src:
-        "/" +
         splitUrl
           .splice(splitUrl.indexOf("public") + 1, splitUrl.length)
           .join("/"),
