@@ -6,6 +6,7 @@
     const splitUrl = photoUrl.default.src.split("/");
     return {
       src:
+      (import.meta.env.MODE == "development" ? "/" : "") +
         splitUrl
           .splice(splitUrl.indexOf("public") + 1, splitUrl.length)
           .join("/"),
@@ -33,13 +34,17 @@
     currentSelectedSrc =
       "/" +
       splitUrl.splice(splitUrl.indexOf("images"), splitUrl.length).join("/");
+
+    window.addEventListener("popstate", closeFullscreenImage, false);
+    window.history.pushState({}, null, null);
   }
 
-  function closeFullscreenImage(el) {
+  function closeFullscreenImage() {
     document.getElementById("fullpage").classList.toggle("hidden");
     document.getElementById("fullpage_content").innerHTML = "";
     document.body.style.overflow = "auto";
     currentSelectedSrc = "";
+    window.removeEventListener("popstate", closeFullscreenImage, false);
   }
 
   function showNextImage() {
@@ -91,7 +96,7 @@
       <img
         src={photo.src}
         alt={photo.alt}
-        class="w-full h-auto rounded-lg mb-4 hover:scale-105 cursor-zoom-in"
+        class="w-full h-auto rounded-lg mb-4 md:hover:scale-105 cursor-zoom-in"
         loading="lazy"
         width={photo.width}
         height={photo.height}

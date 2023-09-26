@@ -16,6 +16,7 @@
               collectionUrl={collection.url}
               collectionDescription={collection.frontmatter.description}
               collectionDate={new Date(collection.frontmatter.pubDate)}
+              collectionPreviewImgUrl={collection.frontmatter.previewImgUrl}
               >
             </PhotoCollectionPreview>
           {/each}
