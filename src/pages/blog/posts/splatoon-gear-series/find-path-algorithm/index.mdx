@@ -1,0 +1,58 @@
+---
+layout: ../../../../../layouts/BlogPost.astro
+title: Finding a gear setup
+author: João Estudante
+description: Explanation of the algorithm I came up with to find a specific setup.
+image: 
+  url: ""
+  alt: ""
+tags:
+  - splatoon-gear-website
+draft: true
+pubDate: "2023-09-30"
+---
+
+## Goal
+
+When designing an algorithm, I find it's easier to start from the end. What do I want to achieve? How can I get there?
+
+> Given a Gear piece, which may or may not already have some abilities unlocked, and for which we know the seed, what is the best way of unlocking a particular sequence of abilities?
+
+We can unlock abilities by playing or by spending chunks. When playing, if we have a drink ticket active, the "chance" of getting certain abilities increases, while the "chance" of getting others decreases. I say "chance" because there's no randomness here, despite what the game makes you think. For a given seed, we always know what ability will be unlocked with and without a drink.
+
+Spending chunks just means that we directly insert an ability in the gear piece, without changing its seed.
+
+Therefore, obtaining an ability is done via:
+- Unlocking with a drink active
+- Unlocking without a drink active
+- Spending chunks
+
+These can be combined: I can unlock the first slot without a drink, then the second with a drink, and the last without a drink again. I can use chunks for any slots at any time. My first action may also be "advance the seed" X number of times, clear the slots, and then use a drink to unlock a specific ability.
+
+## First iteration
+
+The perfect algorithm must be able to navigate all of these possibilities and return "the best" course of action. However, for a first iteration, I'll just accept a working course of action rather than the best.
+
+We can model the state as a graph, where nodes represent an `<ability, seed`> pair, and edges are a way to reach that ability and seed:
+
+<div class="flex items-center justify-center dark:hidden">
+![](/images/posts/splatoon-gear-series/find-path-algorithm/splatoon-algorithm-graph.png)
+</div>
+
+<div class="dark:flex items-center justify-center dark:visible hidden">
+![](/images/posts/splatoon-gear-series/find-path-algorithm/dark-splatoon-algorithm-graph.png)
+</div>
+
+- Starting from an unknown ability, with seed `999...`, we can reach various abilities with different drinks. Some abilities can be reached with different drinks. Despite the drink used, the seed after getting the ability is always the same.
+- We can reach a single ability without a drink. This will result in a different seed than the one obtained with drinks.
+- We can also use chunks - this doesn't change the seed, it only adds an ability.
+
+The algorithm, then, could be this:
+1. Generate the state space. At most, for a single roll, there will be 14 _drinks_ + (14 _chunks_ * 14 _drinks_) + 1 _no drink_ edges: a total of 211 edges. There will also be at most 14 _abilities_/nodes. This can be reduced if we restrict what kind of drinks or chunks can be allowed.
+    - Iterate over all drinks and create an edge between the initial ability and a node with the ability rolled.
+    - Iterate over all chunks and create an edge between the initial ability and a node with the chunk's ability.
+    - Create an edge between the initial ability and the ability rolled without a drink.
+    - Go over all the newly created nodes, and for each one, repeat the steps above.
+    - Repeat the steps above _number of rolls_ times. Each resulting ability will have 211 edges branching out from it, connecting to every new possible ability that can be obtained, based on chunks/drinks used. So, there will be 211 * 14 * _number of rolls_. For 10 rolls, we get 29540 edges, a potentially too large number.
+2. Search among the state space - brute force.
+    - Apply an algorithm like a DFS or a BFS so that the desired abilities are all visited. As soon as that happens, stop the search, and return the edges.
