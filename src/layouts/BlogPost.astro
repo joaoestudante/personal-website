@@ -1,9 +1,15 @@
 ---
 import GlobalLayout from "./GlobalLayout.astro";
 const {frontmatter} = Astro.props;
+const hasImageCaption = !!frontmatter.imageCaption;
 ---
 
 <GlobalLayout>
+    <figure class="sm:float-right mx-auto rounded-[2em] table sm:ml-8 mb-12 sm:mb-0">
+        <img src={frontmatter.image} class="max-h-96 rounded-[2em]"/>
+        {hasImageCaption &&
+                <figcaption class="table-caption caption-bottom mt-4">{frontmatter.imageCaption}</figcaption>}
+    </figure>
     <article class="min-w-full prose lg:prose-2xl md:prose-xl dark:prose-invert text-justify mb-64">
         <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{frontmatter.title}</h1>
         <p class="mt-4 text-gray-900 dark:text-white">{frontmatter.description}</p>

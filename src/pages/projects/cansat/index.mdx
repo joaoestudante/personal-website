@@ -2,7 +2,33 @@
 title: CanSat
 description: "A satellite the size of a soda can."
 image: "/images/projects/cansat/cansat_exposed.jpg"
-date: 2023-06-04
+imageCaption: "Inside view of the CanSat - you can easily see the power bank and the wireless transmitter, together with many wires."
+layout: ../../../layouts/BlogPost.astro
+projectDate: 2016-2017
 ---
 
+import { Image } from 'astro:assets';
+import poster from './poster.jpg';
 
+> A CanSat is a simulation of a real satellite, integrated within the volume and shape of a soft drink can. The challenge for the students is to fit all the major subsystems found in a satellite, such as power, sensors and a communication system, into this minimal volume. The CanSat is then launched to an altitude of a few hundred metres by a rocket or dropped from a platform or captive balloon and its mission begins: to carry out a scientific experiment and achieve a safe landing.  
+_https://www.esa.int/Education/CanSat/What_is_a_CanSat (April 5th, 2025)
+
+
+Together with 5 friends, I participated in the CanSat competition in my final year of highschool and we finished in 3rd place, in the national round. Yay!
+
+I was responsible for: soldering all electronics and programming the data collection; 3D printing and designing the can structure; helping with the ground station development. 
+
+<Image class="float-right ml-12 not-prose rounded-[2em]" src={poster} alt="Our scientific poster."/>
+
+Here is our poster, designed by yours truly. The goal was to make this a poster that stood out, and didn't look like any other regular boring scientific poster. We had great feedback about it, and not to brag too much, but people usually stopped by our poster more time than for other posters 👀.
+
+We had a primary and a secondary mission. The primary mission was the same for all teams: measure temperature and pressure during all of the flight. The secondary mission was defined by us, and we chose multiple things: the most unique were the recording of the flight and the development of a fancy ground station.
+
+We also made some different technological choices than other teams:
+- Used a Raspberry Pi Pico, so we could program in Python instead of C. This also gave us access to the Pi's ecosystem, like the [EnviroPHAT](https://www.adafruit.com/product/3194) which gave us all of the primary mission data, and the Pi Camera for our secondary mission.
+- Used a power bank as a battery. This required no soldering at all (we just had to connect a usb cable to the Pi) and was a foolproof solution for charging. It also gave us a solid heavy core to the can.
+- Designed and 3D printed the structure. This gave us full flexibility for how to assemble everything.
+
+Overall, there were a bunch of ups and downs: the data collected wasn't stored as it should, so we spent a night awake fixing it; the first iteration of the 3D printed structure sucked and was too fragile; the ground station we developed had some kind of memory leak and became slower the longer it ran... but we persevered and ended up in 3rd place. 
+
+This was a wonderful experience that I would love to repeat.
