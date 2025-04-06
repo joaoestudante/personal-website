@@ -1,0 +1,10 @@
+---
+import GlobalLayout from "../../layouts/GlobalLayout.astro";
+import Projects from "../../components/Projects.svelte";
+const posts = await Astro.glob('./**/*.mdx');
+const allProjects = posts.filter(a => !a.frontmatter.draft);
+---
+
+<GlobalLayout>
+	<Projects projects={allProjects} client:load></Projects>
+</GlobalLayout>
