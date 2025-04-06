@@ -1,7 +1,21 @@
 ---
-title: Split Keyboard
+title: "Split Keyboard"
 description: "Building the Corne, a split keyboard, for better ergonomics"
 image: "/images/projects/corne/corne_cover.jpg"
 layout: ../../../layouts/BlogPost.astro
 projectDate: 2024
 ---
+import { Image } from 'astro:assets';
+import diode from './diode_size.jpg';
+
+I have horrible posture. In an attempt to remedy this, I built the Corne: a split keyboard. These types of keyboards help keep the arms at exactly shoulder length, instead of curved inwards. This is what I've found to be the most comfortable for me. I'm still adjusting things, but I'm getting there.
+
+I bought a [kit from 42 Keebs](https://42keebs.eu/shop/kits/pro-micro-based/corne-cherry-v3-hotswap-split-ergo-40-kit/), which came with the PCB and screws for assembling it. I also bought the microcontroller and its sockets from the same website - overall, everything set me back around 90 euros, tax and shipping included. The switches and keycaps came from Aliexpress. I chose [Akko Penguin silent keycaps](https://en.akkogear.com/product/akko-v3-pro-penguin-switch-silent/), as the MX Blues from a previous keyboard were literally making my ears hurt after a day programming. The switches are super silent, as the name states, and although satisfying enough, I do wish they could have a bit more _thock_ to them. The keycaps were just some cheap random orange ones - they can always be replaced later. Finally, I bought a TRRS connector to connect both halves, and a USB-C cable with a magnet to avoid stressing the connector on the microcontroller. Overall, the total cost of the keyboard was around 120 euros. I opted not to install LEDs, OLED screens, and wireless capabilities to simplify the build - perhaps in the future I can go for a fancier one.
+
+I soldered, assembled, and flashed the firmware myself. I was a bit scared of soldering, to be honest. Particularly the 42 SMD diodes, which are super small and a pain to correctly orient and solder without ruining everything:
+
+<div class="flex justify-center">
+<Image class="w-96" src={diode} alt="Diode size comparison" />
+</div>
+
+Luckily, almost everything worked at first try, when testing connections with a multimeter: only a single key didn't, and it was because I forgot to solder the key socket. Flashing the firmware was also tricky - I used [VIA](https://caniusevia.com/) so I could easily customize the layout without having to reflash. All in all, it was fun to get my hands dirty on something purely physical, which is always different from just writing software.
