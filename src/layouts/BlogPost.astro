@@ -11,7 +11,7 @@ const hasImageCaption = !!frontmatter.imageCaption;
         {hasImageCaption &&
                 <figcaption class="table-caption caption-bottom mt-4">{frontmatter.imageCaption}</figcaption>}
     </figure>
-    <article class="min-w-full prose lg:prose-2xl md:prose-xl dark:prose-invert text-justify mb-64">
+    <article class="min-w-full prose lg:prose-2xl md:prose-xl dark:prose-invert text-justify mb-24">
         <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{frontmatter.title}</h1>
         <p class="mt-4 text-gray-900 dark:text-white">{frontmatter.description}</p>
         <span class="text-gray-500 dark:text-gray-300">{frontmatter.pubDate}</span>
