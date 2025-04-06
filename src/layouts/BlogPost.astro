@@ -1,6 +1,7 @@
 ---
+import TableOfContents from "../components/TableOfContents.astro";
 import GlobalLayout from "./GlobalLayout.astro";
-const {frontmatter} = Astro.props;
+const {frontmatter, headings} = Astro.props;
 const hasImageCaption = !!frontmatter.imageCaption;
 ---
 
@@ -14,6 +15,7 @@ const hasImageCaption = !!frontmatter.imageCaption;
         <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{frontmatter.title}</h1>
         <p class="mt-4 text-gray-900 dark:text-white">{frontmatter.description}</p>
         <span class="text-gray-500 dark:text-gray-300">{frontmatter.pubDate}</span>
+        <TableOfContents headings={headings} />
         <hr class="h-px bg-gray-200 border-0 dark:bg-gray-700">
         <div class="text-gray-900 dark:text-white">
             <slot/>
