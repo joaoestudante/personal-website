@@ -3,6 +3,30 @@ title: Seiyū
 description: "Exploring which animes have the same voice actor"
 image: "/images/projects/seiyu/seiyu_cover.jpg"
 projectDate: 2023
+layout: ../../../layouts/BlogPost.astro
 ---
+import { Image } from 'astro:assets';
+import zoro from './seiyu_zoro.png';
+import zoro_connected from './seiyu_aniilist_connected.png';
 
+When I'm watching an anime, especially a popular one with famous voice actors, I'll think: "where have I heard this voice before...?". So I built a tool to find this out:
 
+<div class="flex justify-center">
+<Image class="w-full" src={zoro} alt="Searching for Zoro in Seiyu" />
+</div>
+
+Seiyū is the term used for a japanese voice actor. You can check it out at https://seiyu.onrender.com/. It's on Render's free plan, so it might need a while to boot.
+
+My favourite feature is that the tool also lets you search for an Aniilist user, and you'll see characters with the searched voice actor from the user's lists:
+
+<div class="flex justify-center">
+<Image class="w-full" src={zoro_connected} alt="Searching for Zoro in Seiyu, connected to Aniilist" />
+</div>
+
+Sure, Aniilist also has a similar capability. But you have to go to the Anime Page, find the character in the list, click on the voice actor, and check "on my list" to view other roles. Even that way, a bunch of repeated entries will show up in case the anime has various seasons, where typically I only care about knowing what the other characters look like and what was their most recent appearence. With Seiyū, you only need to search for the character, and you'll immediately get results.
+
+It was built entirely with Flask, Jinja templates, HTMX, and AlpineJS. This project was a great excuse to try out HTMX, which [the author describes](https://htmx.org/) as having the following capabilities:
+
+> htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+
+I loved the simplicity that it brought, instead of using React or something larger, but I have yet to experiment using it in larger codebases. This project is simple - it only has a couple of pages and endpoints (mostly for searching), making heavy use of Aniilist's GraphQL API, which is why I opted for a simpler stack. It's still useful and is a page I check out from time to time.
