@@ -1,11 +1,10 @@
 ---
 import GlobalLayout from "../layouts/GlobalLayout.astro";
 import Home from "../components/Home.svelte";
-import P from "flowbite-svelte/P.svelte";
 const allPosts = await Astro.glob('../pages/blog/posts/**/*.mdx');
 const recentPosts = allPosts.sort((a, b) => Date.parse(b.frontmatter.pubDate) - Date.parse(a.frontmatter.pubDate)).filter(a => !a.frontmatter.draft).slice(0,1);
 const projects = await Astro.glob('../pages/projects/**/*.mdx');
-const recentProjects = projects.filter(project => project.frontmatter.priority && project.frontmatter.priority > 0);
+const recentProjects = projects.filter((project) => !project.frontmatter.draft).sort((a,b) => a.frontmatter.priority - b.frontmatter.priority).slice(0, 5);
 ---
 
 <GlobalLayout> 	
