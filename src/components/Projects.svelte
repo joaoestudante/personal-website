@@ -18,7 +18,7 @@
             class="w-48"
             alt="project cover"
           />
-          <div class="flex flex-col gap-4 mt-4">
+          <div class="flex flex-col gap-4 mt-4 overflow-x-scroll">
             <p class="font-bold text-lg">{project.frontmatter.title}</p>
             <p class="font-light">
               {project.frontmatter.description}
