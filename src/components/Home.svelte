@@ -1,6 +1,7 @@
 <script>
   import { Avatar, FooterIcon, Button, A } from "flowbite-svelte";
   import PostPreview from "./PostPreview.svelte";
+  import EmojiSwitcher from "./EmojiSwitcher.svelte";
   export let recentPosts = [];
   export let projects = [];
   import profilePic from "./profile-pic.png";
@@ -23,6 +24,7 @@
       >
         João Estudante
       </h3>
+      <EmojiSwitcher />
     </div>
 
     <p class="mt-6 text-gray-700 dark:text-gray-300 text-lg lg:text-xl">
