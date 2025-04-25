@@ -9,7 +9,7 @@
 
 <a
   href={collectionUrl}
-  class="block grow h-96 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+  class="block grow h-96 bg-onPrimaryBackground-light dark:bg-onPrimaryBackground-dark shadow-sm hover:scale-105 transition-all cursor-pointer rounded-md"
 >
   <img
     src={collectionPreviewImgUrl}

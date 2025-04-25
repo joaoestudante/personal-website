@@ -10,7 +10,7 @@
 
 <a
   href={postUrl}
-  class="block min-w-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+  class="block min-w-full p-6 bg-onPrimaryBackground-light dark:bg-onPrimaryBackground-dark shadow-sm hover:scale-105 transition-all cursor-pointer rounded-md"
 >
   <h4
     class="font-display text-xl font-semibold lg:text-2xl text-gray-900 dark:text-white"

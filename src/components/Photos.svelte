@@ -13,7 +13,7 @@
     </p>
   {/if}
   <div class="flex flex-col gap-4 mt-8 mb-24">
-    <div class="flex flex-row flex-wrap gap-4">
+    <div class="flex flex-row flex-wrap gap-8">
       {#each collections as collection}
         <PhotoCollectionPreview
           collectionTitle={collection.frontmatter.title}

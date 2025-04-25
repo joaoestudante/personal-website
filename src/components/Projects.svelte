@@ -11,7 +11,7 @@
       {#each projects as project}
         <a
           href={project.url}
-          class="w-full h-48 flex gap-4 bg-white dark:bg-gray-700 shadow-sm border hover:scale-105 transition-all cursor-pointer dark:border-0 rounded-md"
+          class="dark:text-white w-full h-48 flex gap-4 bg-onPrimaryBackground-light dark:bg-onPrimaryBackground-dark shadow-sm hover:scale-105 transition-all cursor-pointer rounded-md"
         >
           <img
             src={project.frontmatter.image}

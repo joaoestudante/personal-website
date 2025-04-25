@@ -7,7 +7,9 @@
 </script>
 
 <div class="flex flex-col gap-12">
-  <div class="p-12">
+  <div
+    class="p-12 bg-onPrimaryBackground-light dark:bg-onPrimaryBackground-dark rounded-md"
+  >
     <div class="flex gap-6 items-center">
       <img
         src={profilePic.src}
@@ -23,9 +25,8 @@
       </h3>
     </div>
 
-    <p class="mt-6 text-gray-500 dark:text-gray-300 text-lg lg:text-xl">
-      Full Stack Developer @ Autodesk Fusion Operations, helping make factories
-      more efficient.
+    <p class="mt-6 text-gray-700 dark:text-gray-300 text-lg lg:text-xl">
+      Full Stack Developer, also comfortable with data and automation
     </p>
     <p class="mt-4 text-gray-900 dark:text-white text-lg lg:text-xl">
       Fan of interface design, human interaction with computers, and how to
@@ -100,7 +101,7 @@
       {#each projects as project}
         <a
           href={project.url}
-          class="group grow overflow-hidden relative md:w-80 w-full h-72 bg-white dark:bg-gray-700 shadow-sm border hover:scale-105 transition-all cursor-pointer dark:border-0 rounded-md"
+          class="group grow overflow-hidden relative md:w-80 w-full h-72 shadow-sm hover:scale-105 transition-all cursor-pointer rounded-md"
         >
           <img
             src={project.frontmatter.image}
@@ -108,7 +109,7 @@
             alt="project cover"
           />
           <div
-            class="w-full border-t-gray-200 border border-b-0 border-x-0 rounded-b-lg group-hover:h-fit h-12 shadow-md p-2 bg-white dark:bg-gray-700 dark:text-white absolute bottom-0 left-0"
+            class="w-full rounded-b-md group-hover:h-fit h-12 shadow-md p-2 bg-onPrimaryBackground-light dark:bg-onPrimaryBackground-dark dark:text-white absolute bottom-0 left-0"
           >
             <p class="font-bold text-lg">{project.frontmatter.title}</p>
             <p class="font-light text-sm hidden group-hover:block">
