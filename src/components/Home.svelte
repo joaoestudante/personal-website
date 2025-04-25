@@ -11,7 +11,7 @@
   <div
     class="p-12 bg-onPrimaryBackground-light dark:bg-onPrimaryBackground-dark rounded-md"
   >
-    <div class="flex gap-6 items-center">
+    <div class="flex gap-6 items-center flex-wrap">
       <img
         src={profilePic.src}
         alt="Profile"
