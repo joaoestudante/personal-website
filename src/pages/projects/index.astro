@@ -2,7 +2,7 @@
 import GlobalLayout from "../../layouts/GlobalLayout.astro";
 import Projects from "../../components/Projects.svelte";
 const posts = await Astro.glob('./**/*.mdx');
-const allProjects = posts.filter(a => !a.frontmatter.draft);
+const allProjects = posts.filter((project) => !project.frontmatter.draft).sort((a,b) => a.frontmatter.priority - b.frontmatter.priority);
 ---
 
 <GlobalLayout>

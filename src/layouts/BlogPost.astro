@@ -6,8 +6,8 @@ const hasImageCaption = !!frontmatter.imageCaption;
 ---
 
 <GlobalLayout>
-    <figure class="sm:float-right mx-auto rounded-[2em] table sm:ml-8 mb-12 sm:mb-0">
-        <img src={frontmatter.image} class="max-h-96 rounded-[2em]"/>
+    <figure class="sm:float-right mx-auto rounded-md table sm:ml-8 mb-12 sm:mb-0">
+        <img src={frontmatter.image} class="max-h-96 rounded-md"/>
         {hasImageCaption &&
                 <figcaption class="table-caption caption-bottom mt-4">{frontmatter.imageCaption}</figcaption>}
     </figure>

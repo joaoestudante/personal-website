@@ -7,7 +7,7 @@
 </script>
 
 <div class="flex flex-col gap-12">
-  <div class="border dark:border-gray-600 rounded-[2em] p-12">
+  <div class="p-12">
     <div class="flex gap-6 items-center">
       <img
         src={profilePic.src}
@@ -30,7 +30,8 @@
     <p class="mt-4 text-gray-900 dark:text-white text-lg lg:text-xl">
       Fan of interface design, human interaction with computers, and how to
       build software. In my free time, I like to experiment with new frameworks,
-      write, watch movies, and travel.
+      write, watch movies, travel, cook, and take pictures. Usually not all at
+      the same time.
     </p>
     <div class="flex mt-8 space-x-6">
       <FooterIcon
@@ -99,11 +100,11 @@
       {#each projects as project}
         <a
           href={project.url}
-          class="group grow overflow-hidden relative md:w-80 w-full h-72 bg-white dark:bg-gray-700 shadow-sm border hover:scale-105 transition-all cursor-pointer dark:border-0 rounded-t-[2em] rounded-b-lg"
+          class="group grow overflow-hidden relative md:w-80 w-full h-72 bg-white dark:bg-gray-700 shadow-sm border hover:scale-105 transition-all cursor-pointer dark:border-0 rounded-md"
         >
           <img
             src={project.frontmatter.image}
-            class="rounded-t-[2em] w-full"
+            class="rounded-md w-full"
             alt="project cover"
           />
           <div
@@ -118,31 +119,4 @@
       {/each}
     </div>
   </div>
-
-  {#if recentPosts.length > 0}
-    <div class="flex flex-col gap-4 mb-2">
-      <h3
-        class="font-display text-xl font-extrabold lg:mb-6 lg:text-3xl text-gray-900 dark:text-white"
-      >
-        Latest post
-      </h3>
-      <div class="flex flex-row flex-wrap gap-4 justify-between">
-        {#each recentPosts as post}
-          <PostPreview
-            postTitle={post.frontmatter.title}
-            postUrl={post.url}
-            postDescription={post.frontmatter.description}
-            postDate={new Date(post.frontmatter.pubDate)}
-            postImgUrl={post.frontmatter.image.url}
-            tags={post.frontmatter.tags}
-          ></PostPreview>
-        {/each}
-      </div>
-      <div>
-        <a href="/blog" class="text-primary-700 dark:text-primary-600" outline
-          >View all</a
-        >
-      </div>
-    </div>
-  {/if}
 </div>
