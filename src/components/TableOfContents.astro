@@ -4,14 +4,12 @@ import TableOfContentsHeading from "./TableOfContentsHeading.astro";
 const { headings } = Astro.props;
 const toc = buildToc(headings);
 
-function buildToc(headings: any)
-{
+function buildToc(headings: any) {
   const toc: any[] = [];
   const parentHeadings = new Map();
-  
-  if (!headings)
-    return toc;
-  
+
+  if (!headings) return toc;
+
   headings.forEach((h: any) => {
     const heading = { ...h, subheadings: [] };
     parentHeadings.set(heading.depth, heading);
@@ -19,12 +17,11 @@ function buildToc(headings: any)
     if (heading.depth === 2) {
       toc.push(heading);
     } else {
-      parentHeadings.get(heading.depth - 1).subheadings.push(heading);
+      parentHeadings.get(heading.depth - 1)?.subheadings.push(heading);
     }
   });
   return toc;
 }
-
 ---
 
 <nav class="toc">
