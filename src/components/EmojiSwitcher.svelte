@@ -49,7 +49,7 @@
 </script>
 
 <div
-  class="w-fit text-4xl flex hover:bg-onPrimaryBackground-light items-center justify-center cursor-pointer select-none relative"
+  class="w-fit p-2 text-4xl flex items-center justify-center cursor-pointer select-none relative"
   on:click={changeEmoji}
 >
   <span
