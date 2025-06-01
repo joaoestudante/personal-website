@@ -4,7 +4,6 @@
   export let postDate = "";
   export let postDescription = "";
   export let postUrl = "";
-  export let postImgUrl = "";
   export let tags = [];
 </script>
 
